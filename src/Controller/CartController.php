@@ -1,12 +1,14 @@
 <?php
+namespace App\Controller;
+
 use App\Cart\CartHandler;
-use App\Cart\SessionCart;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class CartController extends AbstractController
 {
     public function __construct(
-        #[Autowire(service: SessionCart::class)]
         private CartHandler $cartHandler
     ) {}
 
