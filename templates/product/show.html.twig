@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ product.libelle }} - Détails{% endblock %}
+
+{% block body %}
+<div class="container product-detail-container">
+    <div class="product-detail-card">
+        <div class="product-detail-header">
+            <span class="product-category">{{ product.categorie ? product.categorie.categorie : 'Sans Catégorie' }}</span>
+            <h1>{{ product.libelle }}</h1>
+        </div>
+
+        <div class="product-detail-body">
+            <div class="product-price-section">
+                <span class="product-price">{{ product.price|number_format(2, ',', ' ') }} €</span>
+            </div>
+
+            {% if product.description %}
+                <div class="product-description-section">
+                    <h2>Description</h2>
+                    <p>{{ product.description|nl2br }}</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="product-detail-footer">
+            <a href="{{ path('app_home') }}" class="btn btn-secondary">Retour à l'accueil</a>
+            <a href="{{ path('cart_add', {id: product.id}) }}" class="btn btn-primary btn-large">Ajouter au panier</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,14 +1,17 @@
-
 {% extends 'base.html.twig' %}
 
+{% block title %}Connexion{% endblock %}
+
 {% block body %}
-<h1>Connexion</h1>
-
-{% if error %}
-    <div class="alert alert-danger">{{ error.messageKey }}</div>
-{% endif %}
-
 <form method="post">
+    <h1>Connexion</h1>
+
+    {% if error %}
+        <div class="alert alert-danger" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); padding: 0.8rem; border-radius: 8px; color: #fca5a5; font-size: 0.9rem; text-align: center; margin-bottom: 0.5rem;">
+            {{ error.messageKey }}
+        </div>
+    {% endif %}
+
     <div>
         <label>Email</label>
         <input type="email" name="_username" value="{{ last_username }}" required>

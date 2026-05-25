@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Boutique E-commerce{% endblock %}
+
+{% block body %}
+<div class="container">
+    <header class="home-header">
+        <h1>Découvrez nos Produits</h1>
+        <p>Une sélection exclusive de produits de haute qualité.</p>
+    </header>
+
+    <div class="product-grid">
+        {% for product in products %}
+            <div class="product-card">
+                <div class="product-info">
+                    <span class="product-category">{{ product.categorie ? product.categorie.categorie : 'Sans Catégorie' }}</span>
+                    <h3>{{ product.libelle }}</h3>
+                    <p class="product-description">{{ product.description }}</p>
+                    <div class="product-footer">
+                        <span class="product-price">{{ product.price|number_format(2, ',', ' ') }} €</span>
+                        <div class="product-actions">
+                            <a href="{{ path('product_details', {id: product.id}) }}" class="btn btn-secondary">Détails</a>
+                            <a href="{{ path('cart_add', {id: product.id}) }}" class="btn btn-primary">Acheter</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <p>Aucun produit disponible pour le moment. Revenez plus tard !</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
