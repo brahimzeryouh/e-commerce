@@ -1,0 +1,73 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Our Products{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <h1 class="mb-4">Our Products (Page {{ products.currentPageNumber }} / {{ products.pageCount }})</h1>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for product in products %}
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="{{ asset('images/' ~ product.image) }}" class="card-img-top" alt="{{ product.nom }}" onerror="this.src='https://via.placeholder.com/300x200'">
+                        <div class="card-body">
+                            <span class="badge bg-primary mb-2">{{ product.category.nom }}</span>
+                            <h5 class="card-title">{{ product.nom }}</h5>
+                            <p class="fw-bold text-success">${{ product.prix|number_format(2) }}</p>
+                            <div class="d-flex gap-2">
+                                <a href="{{ path('app_product_details', {id: product.id}) }}" class="btn btn-outline-primary">View Details</a>
+                                <a href="{{ path('app_cart_add', {id: product.id}) }}" class="btn btn-primary">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        {# Affichage de la pagination #}
+        <div class="d-flex justify-content-center mt-5">
+            <nav>
+                <ul class="pagination">
+                    {% if products.currentPageNumber > 1 %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ path('app_products', {page: products.currentPageNumber - 1}) }}">
+                                Previous
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <span class="page-link">Previous</span>
+                        </li>
+                    {% endif %}
+
+                    {% for page in 1..products.pageCount %}
+                        <li class="page-item {{ page == products.currentPageNumber ? 'active' : '' }}">
+                            <a class="page-link" href="{{ path('app_products', {page: page}) }}">
+                                {{ page }}
+                            </a>
+                        </li>
+                    {% endfor %}
+
+                    {% if products.currentPageNumber < products.pageCount %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ path('app_products', {page: products.currentPageNumber + 1}) }}">
+                                Next
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <span class="page-link">Next</span>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+
+        {# Affichage des informations de pagination #}
+        <div class="text-center mt-3 text-muted">
+            Showing {{ products|length }} of {{ products.totalItemCount }} products
+            (Page {{ products.currentPageNumber }} of {{ products.pageCount }})
+        </div>
+    </div>
+{% endblock %}

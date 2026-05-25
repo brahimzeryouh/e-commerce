@@ -14,43 +14,53 @@ class Product
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 150)]
-    private ?string $libelle = null;
+    #[ORM\Column(length: 255)]
+    private ?string $nom = null;
 
-    #[ORM\Column]
-    private ?float $price = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $slug = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\ManyToOne]
-    private ?Category $categorie = null;
+    #[ORM\Column]
+    private ?float $prix = null;
+
+    #[ORM\Column]
+    private ?int $stock = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $image = null;
+
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $category = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getLibelle(): ?string
+    public function getNom(): ?string
     {
-        return $this->libelle;
+        return $this->nom;
     }
 
-    public function setLibelle(string $libelle): static
+    public function setNom(string $nom): static
     {
-        $this->libelle = $libelle;
+        $this->nom = $nom;
 
         return $this;
     }
 
-    public function getPrice(): ?float
+    public function getSlug(): ?string
     {
-        return $this->price;
+        return $this->slug;
     }
 
-    public function setPrice(float $price): static
+    public function setSlug(?string $slug): static
     {
-        $this->price = $price;
+        $this->slug = $slug;
 
         return $this;
     }
@@ -60,21 +70,57 @@ class Product
         return $this->description;
     }
 
-    public function setDescription(?string $description): static
+    public function setDescription(string $description): static
     {
         $this->description = $description;
 
         return $this;
     }
 
-    public function getCategorie(): ?Category
+    public function getPrix(): ?float
     {
-        return $this->categorie;
+        return $this->prix;
     }
 
-    public function setCategorie(?Category $categorie): static
+    public function setPrix(float $prix): static
     {
-        $this->categorie = $categorie;
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function getStock(): ?int
+    {
+        return $this->stock;
+    }
+
+    public function setStock(int $stock): static
+    {
+        $this->stock = $stock;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): static
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }

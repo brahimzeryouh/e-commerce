@@ -1,11 +1,12 @@
 <?php
-
 namespace App\Cart;
+
+use App\DTO\CartDTO;
 
 interface CartInterface
 {
-    public function add(int $productId, int $quantity): void;
-    public function remove(int $productId): void;
-    public function getItems(): array;
-    public function clear(): void;
+    public function addItem(CartDTO $cart, int $productId, int $quantity, float $price): CartDTO;
+    public function removeItem(CartDTO $cart, int $productId): CartDTO;
+    public function getCart(string $identifier): ?CartDTO;
+    public function clearCart(string $identifier): void;
 }
